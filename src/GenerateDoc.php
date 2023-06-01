@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 
 /**
- * @OA\Info(title="SIGAFY API", version="0.1")
+ * @OA\Info(title="API DOCUMENTATION", version="0.1")
  * 
  * @OA\SecurityScheme(
  *     securityScheme="bearerAuth",
