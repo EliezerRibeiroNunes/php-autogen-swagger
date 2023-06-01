@@ -4,7 +4,7 @@ Gerador de documentação de API automática utilizando a biblioteca darkaonline
 
 ## INSTALAÇÃO
 
-    composer install php-autogen-doc/swagger
+    composer require php-autogen/swagger
 
 ## UTILIZAÇÃO
 
