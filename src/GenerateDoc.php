@@ -5,21 +5,6 @@ namespace AutoGen;
 use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 
-/**
- * @OA\Info(title="API DOCUMENTATION", version="0.1")
- * 
- * @OA\SecurityScheme(
- *     securityScheme="bearerAuth",
- *     type="http",
- *     scheme="bearer",
- *     bearerFormat="JWT"
- * ),
- *
- * @OA\Security(
- *     security={{"bearerAuth": {}}}
- * )
- */
-
 class GenerateDoc
 {
     const DEFAULT_MODULES_PATH = 'App\Modules';
@@ -27,25 +12,32 @@ class GenerateDoc
     public function generate()
     {
         $routeCollection = Route::getRoutes();
-        
+
         foreach ($routeCollection as $route) {
-            $action = $route->getActionName();
-            $swaggerAnnotation = '';
-            $rules = [];
+            try {
+                $action = $route->getActionName();
+                $swaggerAnnotation = '';
+                $rules = [];
 
-            if (str_contains($action, self::DEFAULT_MODULES_PATH)) {
-                $classObject = app($action);
+                if (str_contains($action, self::DEFAULT_MODULES_PATH)) {
+                    $classObject = app($action);
 
-                if (method_exists($classObject, 'rules')) {
-                    $rules = $classObject->rules();
+                    if (method_exists($classObject, 'rules')) {
+                        $rules = $classObject->rules();
+                    }
+
+                    $swaggerAnnotation .= $this->setContent($route, $rules, $action);
+                    $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
+
+                    $actionName = $this->extractActionName($action);
+                    print("$actionName - completed successfully!\n");
                 }
-
-                $swaggerAnnotation .= $this->setContent($route, $rules, $action);
-                $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
-
-                print("$action - completed successfully!\n");
+            } catch (\Exception $e) {
+                print("$actionName - error: " . $e->getMessage() . "\n");
+                continue;
             }
         }
+        $this->createInfoFile();
     }
 
     private function setContent($route, array $rules, string $action)
@@ -80,6 +72,35 @@ class GenerateDoc
         $annotation = "/**\n" . $formattedContent . "\n */";
 
         return $annotation;
+    }
+
+    public function createInfoFile()
+    {
+        $content = "
+        /**
+        * @OA\Info(title=\"API DOCUMENTATION\", version=\"0.1\")
+        * 
+        * @OA\SecurityScheme(
+        *     securityScheme=\"bearerAuth\",
+        *     type=\"http\",
+        *     scheme=\"bearer\",
+        *     bearerFormat=\"JWT\"
+        * ),
+        *
+        * @OA\Security(
+        *     security={{\"bearerAuth\": {}}}
+        * )
+        */";
+
+        $classContent = "<?php\n\nnamespace App;\n\n$content\n\n\n";
+        $filePath = 'app/swaggerApiInfo.php';
+
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        file_put_contents($filePath, $classContent, FILE_APPEND);
+        print("Info file created successfully !");
     }
 
     private function addSwaggerAnnotationToActionClass($classObject, string $swaggerAnnotation)
@@ -165,11 +186,10 @@ class GenerateDoc
         return current($data);
     }
 
-    private function getActionRules($classObject)
+    private function extractActionName(string $action)
     {
-        if (method_exists($classObject, 'rules')) {
-            return $classObject->rules();
-        }
+        $actionName = explode("\\", $action);
+        return end($actionName);
     }
 
     private function setResponseCode(string $method)
