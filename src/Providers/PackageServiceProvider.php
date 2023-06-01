@@ -1,6 +1,6 @@
 <?php
 
-namespace AutoGen;
+namespace AutoGen\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use AutoGen\Commands\GenerateDocCommand;
