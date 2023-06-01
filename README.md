@@ -10,4 +10,4 @@ Gerador de documentação de API automática utilizando a biblioteca darkaonline
 
 No framework Laravel rode o comando:
 
-    composer require php-autogen-doc/swagger
+    php artisan gen-swagger-doc
