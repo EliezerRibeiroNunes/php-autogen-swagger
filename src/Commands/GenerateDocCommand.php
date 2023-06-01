@@ -7,7 +7,7 @@ use AutoGen\GenerateDoc;
 
 class GenerateDocCommand extends Command
 {
-    protected $signature = 'autogen:doc';
+    protected $signature = 'gen-swagger-doc';
     protected $description = 'Generate Swagger documentation';
 
     public function handle()
