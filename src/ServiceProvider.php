@@ -3,14 +3,16 @@
 namespace AutoGen;
 
 use Illuminate\Support\ServiceProvider;
-use AutoGen\Console\GenerateDocCommand;
+use AutoGen\Commands\GenerateDocCommand;
 
 class PackageServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function boot()
     {
-        $this->commands([
-            GenerateDocCommand::class,
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                GenerateDocCommand::class,
+            ]);
+        }
     }
 }

@@ -1,20 +1,20 @@
 <?php
 
-namespace AutoGen\Console;
+namespace AutoGen\Commands;
 
 use Illuminate\Console\Command;
 use AutoGen\GenerateDoc;
 
 class GenerateDocCommand extends Command
 {
-    protected $signature = 'gen-doc';
-    protected $description = 'Gera a documentação automática do Swagger';
+    protected $signature = 'autogen:doc';
+    protected $description = 'Generate Swagger documentation';
 
     public function handle()
     {
         $generateDoc = new GenerateDoc();
         $generateDoc->generate();
 
-        $this->info('Documentação Swagger gerada com sucesso!');
+        $this->info('Swagger documentation generated successfully!');
     }
 }

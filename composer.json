@@ -10,7 +10,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "AutoGen\\": "src/"
+            "AutoGen\\": "src/",
+            "AutoGen\\Commands\\": "src/Commands"
         }
     },
     "require": {
@@ -19,11 +20,7 @@
         "illuminate/support": "^8.0",
         "illuminate/console": "^8.0"
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "AutoGen\\PackageServiceProvider"
-            ]
-        }
-    }
+    "providers": [
+        "AutoGen\\PackageServiceProvider"
+    ]   
 }
