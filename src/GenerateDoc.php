@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 
 /**
- * @OA\Info(title="API DOCUMENTATION", version="1.0")
+ * @OA\Info(title="SIGAFY API", version="0.1")
  * 
  * @OA\SecurityScheme(
  *     securityScheme="bearerAuth",
@@ -20,35 +20,45 @@ use ReflectionClass;
  * )
  */
 
-class AutoGenSwagger
+class GenerateDoc
 {
     const DEFAULT_MODULES_PATH = 'App\Modules';
 
-    public function handle()
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'gen-doc';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    public function generate()
     {
         $routeCollection = Route::getRoutes();
+        
+        foreach ($routeCollection as $route) {
+            $action = $route->getActionName();
+            $swaggerAnnotation = '';
+            $rules = [];
 
-        if ($routeCollection) {
-            foreach ($routeCollection as $route) {
-                $action = $route->getActionName();
-                $swaggerAnnotation = '';
-                $rules = [];
+            if (str_contains($action, self::DEFAULT_MODULES_PATH)) {
+                $classObject = app($action);
 
-                if (str_contains($action, self::DEFAULT_MODULES_PATH)) {
-                    $classObject = app($action);
-
-                    if (method_exists($classObject, 'rules')) {
-                        $rules = $classObject->rules();
-                    }
-
-                    $swaggerAnnotation .= $this->setContent($route, $rules, $action);
-                    $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
-
-                    print("$action - completed successfully!\n");
+                if (method_exists($classObject, 'rules')) {
+                    $rules = $classObject->rules();
                 }
+
+                $swaggerAnnotation .= $this->setContent($route, $rules, $action);
+                $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
+
+                print("$action - completed successfully!\n");
             }
-        } else {
-            print("No routes found!!");
         }
     }
 
