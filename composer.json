@@ -1,0 +1,20 @@
+{
+    "name": "php-autogen/swagger",
+    "description": "Gerador de documentação de API automática com base no swagger",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name" : "Eliezer Nunes"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AutoGen\\" : "src/"
+        }
+    },
+    "require": {
+        "php" : ">=7.0",
+        "darkaonline/l5-swagger": "^8.5"
+    }
+}
