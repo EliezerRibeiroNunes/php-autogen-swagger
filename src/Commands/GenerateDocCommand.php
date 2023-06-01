@@ -15,6 +15,5 @@ class GenerateDocCommand extends Command
         $generateDoc = new GenerateDoc();
         $generateDoc->generate();
 
-        $this->info('Swagger documentation generated successfully!');
     }
 }
