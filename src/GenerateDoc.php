@@ -24,20 +24,6 @@ class GenerateDoc
 {
     const DEFAULT_MODULES_PATH = 'App\Modules';
 
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'gen-doc';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
-
     public function generate()
     {
         $routeCollection = Route::getRoutes();

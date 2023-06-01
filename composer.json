@@ -20,7 +20,11 @@
         "illuminate/support": "*",
         "illuminate/console": "*"
     },
-    "providers": [
-        "AutoGen\\PackageServiceProvider"
-    ]   
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AutoGen\\PackageServiceProvider"
+            ]
+        }
+    }
 }
