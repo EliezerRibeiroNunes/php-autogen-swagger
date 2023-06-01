@@ -22,11 +22,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "AutoGen\\Console\\InstallPackageServiceProvider"
+                "AutoGen\\PackageServiceProvider"
             ]
         }
-    },
-    "providers": [
-        "AutoGen\\PackageServiceProvider"
-    ]
+    }
 }
