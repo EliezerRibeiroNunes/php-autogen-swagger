@@ -10,11 +10,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "AutoGen\\" : "src/"
+            "AutoGen\\": "src/"
         }
     },
     "require": {
-        "php" : ">=7.0",
-        "darkaonline/l5-swagger": "^8.5"
+        "php": ">=7.2",
+        "zircote/swagger-php": ">=3.0",
+        "illuminate/support": "^8.0",
+        "laravel/passport": "^10.0"
     }
 }

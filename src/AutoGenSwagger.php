@@ -28,23 +28,27 @@ class AutoGenSwagger
     {
         $routeCollection = Route::getRoutes();
 
-        foreach ($routeCollection as $route) {
-            $action = $route->getActionName();
-            $swaggerAnnotation = '';
-            $rules = [];
+        if ($routeCollection) {
+            foreach ($routeCollection as $route) {
+                $action = $route->getActionName();
+                $swaggerAnnotation = '';
+                $rules = [];
 
-            if (str_contains($action, self::DEFAULT_MODULES_PATH)) {
-                $classObject = app($action);
-               
-                if (method_exists($classObject, 'rules')) {
-                    $rules = $classObject->rules();
+                if (str_contains($action, self::DEFAULT_MODULES_PATH)) {
+                    $classObject = app($action);
+
+                    if (method_exists($classObject, 'rules')) {
+                        $rules = $classObject->rules();
+                    }
+
+                    $swaggerAnnotation .= $this->setContent($route, $rules, $action);
+                    $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
+
+                    print("$action - completed successfully!\n");
                 }
-
-                $swaggerAnnotation .= $this->setContent($route, $rules, $action);
-                $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
-
-                print("$action - completed successfully!\n");
             }
+        } else {
+            print("No routes found!!");
         }
     }
 
