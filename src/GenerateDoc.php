@@ -30,7 +30,7 @@ class GenerateDoc
                     $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
 
                     $actionName = $this->extractActionName($action);
-                    print("$actionName - completed successfully!\n");
+                    print("$actionName ................................................................... DONE\n");
                 }
             } catch (\Exception $e) {
                 print("$actionName - error: " . $e->getMessage() . "\n");
