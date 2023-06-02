@@ -30,7 +30,8 @@ class GenerateDoc
                     $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
 
                     $actionName = $this->extractActionName($action);
-                    print("$actionName ................................................................... DONE\n");
+                    $padding = str_pad('', 80 - strlen($actionName), '.');
+                    print("$actionName $padding DONE\n");
                 }
             } catch (\Exception $e) {
                 print("$actionName - error: " . $e->getMessage() . "\n");
@@ -92,7 +93,7 @@ class GenerateDoc
         * )
         */";
 
-        $classContent = "<?php\n\nnamespace App;\n\n$content\n\n\n";
+        $classContent = "<?php\n\nnamespace App;\n\n$content\n\n\nclass SwaggerApiInfo {\n    public function handle() {}\n}";
         $filePath = 'app/swaggerApiInfo.php';
 
         if (file_exists($filePath)) {
