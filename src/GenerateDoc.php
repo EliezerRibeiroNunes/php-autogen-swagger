@@ -38,7 +38,6 @@ class GenerateDoc
                 continue;
             }
         }
-        $this->createInfoFile();
     }
 
     private function setContent($route, array $rules, string $action)
@@ -73,35 +72,6 @@ class GenerateDoc
         $annotation = "/**\n" . $formattedContent . "\n */";
 
         return $annotation;
-    }
-
-    public function createInfoFile()
-    {
-        $content = "
-        /**
-        * @OA\Info(title=\"API DOCUMENTATION\", version=\"0.1\")
-        * 
-        * @OA\SecurityScheme(
-        *     securityScheme=\"bearerAuth\",
-        *     type=\"http\",
-        *     scheme=\"bearer\",
-        *     bearerFormat=\"JWT\"
-        * ),
-        *
-        * @OA\Security(
-        *     security={{\"bearerAuth\": {}}}
-        * )
-        */";
-
-        $classContent = "<?php\n\nnamespace App;\n\n$content\n\n\nclass SwaggerApiInfo {\n    public function handle() {}\n}";
-        $filePath = 'app/swaggerApiInfo.php';
-
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
-
-        file_put_contents($filePath, $classContent, FILE_APPEND);
-        print("Info file created successfully !");
     }
 
     private function addSwaggerAnnotationToActionClass($classObject, string $swaggerAnnotation)
