@@ -1,5 +1,5 @@
 {
-    "name": "php-autogen/swagger",
+    "name": "php-swagger-autogen/doc",
     "description": "Gerador de documentação de API automática com base no swagger",
     "type": "library",
     "license": "MIT",
