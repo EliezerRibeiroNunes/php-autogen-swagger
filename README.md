@@ -2,7 +2,7 @@
 
 Gerador de documentação de API automática utilizando a biblioteca darkaonline/l5-swagger
 
-# REQUISITOS 
+## REQUISITOS 
 https://github.com/DarkaOnLine/L5-Swagger/wiki/Installation-&-Configuration
 
 ## INSTALAÇÃO
