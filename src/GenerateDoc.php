@@ -7,7 +7,7 @@ use ReflectionClass;
 
 class GenerateDoc
 {
-    const DEFAULT_MODULES_PATH = 'App\Modules';
+    const DEFAULT_MODULES_PATH = 'autogen-doc.setpath';
 
     public function generate()
     {
@@ -30,7 +30,7 @@ class GenerateDoc
                     $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
 
                     $actionName = $this->extractActionName($action);
-                    $padding = str_pad('', 80 - strlen($actionName), '.');
+                    $padding = str_pad('', 50 - strlen($actionName), '.');
                     print("$actionName $padding DONE\n");
                 }
             } catch (\Exception $e) {
