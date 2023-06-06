@@ -4,7 +4,7 @@ namespace AutoGen\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use AutoGen\Commands\GenerateDocCommand;
-use SeuPacote\Console\Commands\SetPathCommand;
+use AutoGen\Commands\SetPathCommand;
 
 class PackageServiceProvider extends ServiceProvider
 {
