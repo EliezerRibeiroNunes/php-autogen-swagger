@@ -1,6 +1,6 @@
 <?php
 
-namespace SeuPacote\Console\Commands;
+namespace AutoGen\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
