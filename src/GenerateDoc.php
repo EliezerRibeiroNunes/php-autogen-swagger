@@ -7,10 +7,16 @@ use ReflectionClass;
 
 class GenerateDoc
 {
-    const DEFAULT_MODULES_PATH = 'autogen-doc.setpath';
+    private $path;
+
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
 
     public function generate()
     {
+        $path = $this->path;
         $routeCollection = Route::getRoutes();
 
         foreach ($routeCollection as $route) {
@@ -19,7 +25,7 @@ class GenerateDoc
                 $swaggerAnnotation = '';
                 $rules = [];
 
-                if (str_contains($action, self::DEFAULT_MODULES_PATH)) {
+                if (str_contains($action, $path)) {
                     $classObject = app($action);
 
                     if (method_exists($classObject, 'rules')) {
@@ -32,6 +38,8 @@ class GenerateDoc
                     $actionName = $this->extractActionName($action);
                     $padding = str_pad('', 50 - strlen($actionName), '.');
                     print("$actionName $padding DONE\n");
+                } else {
+                    print('No actions found !');
                 }
             } catch (\Exception $e) {
                 print("$actionName - error: " . $e->getMessage() . "\n");
