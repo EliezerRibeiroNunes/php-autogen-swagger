@@ -23,6 +23,7 @@ class GenerateDoc
                 $action = $route->getActionName();
                 $swaggerAnnotation = '';
                 $rules = [];
+                $actionName = $this->extractActionName($action);
 
                 if (str_contains($action, $this->actionsPath)) {
                     $classObject = app($action);
@@ -34,11 +35,11 @@ class GenerateDoc
                     $swaggerAnnotation .= $this->setContent($route, $rules, $action);
                     $this->addSwaggerAnnotationToActionClass($classObject, $swaggerAnnotation);
 
-                    $actionName = $this->extractActionName($action);
                     $padding = str_pad('', 50 - strlen($actionName), '.');
                     print("$actionName $padding DONE\n");
+                    
                 } else {
-                    print('No actions found !');
+                    print('There is not action in this path!');
                 }
             } catch (\Exception $e) {
                 print("$actionName - error: " . $e->getMessage() . "\n");
