@@ -7,16 +7,15 @@ use ReflectionClass;
 
 class GenerateDoc
 {
-    private $path;
+    private $actionsPath;
 
-    public function setPath($path)
+    public function setPath($actionsPath)
     {
-        $this->path = $path;
+        $this->actionsPath = $actionsPath;
     }
 
     public function generate()
     {
-        $path = $this->path;
         $routeCollection = Route::getRoutes();
 
         foreach ($routeCollection as $route) {
@@ -25,7 +24,7 @@ class GenerateDoc
                 $swaggerAnnotation = '';
                 $rules = [];
 
-                if (str_contains($action, $path)) {
+                if (str_contains($action, $this->actionsPath)) {
                     $classObject = app($action);
 
                     if (method_exists($classObject, 'rules')) {
