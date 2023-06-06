@@ -9,23 +9,24 @@ class GenerateDoc
 {
     private $actionsPath;
 
-    public function setPath($actionsPath)
+    public function setPath($path)
     {
-        $this->actionsPath = $actionsPath;
+        $this->actionsPath = $path;
     }
 
     public function generate()
     {
+        $actionsPath = $this->actionsPath;
         $routeCollection = Route::getRoutes();
 
         foreach ($routeCollection as $route) {
             try {
                 $action = $route->getActionName();
+                $actionName = $this->extractActionName($action);
                 $swaggerAnnotation = '';
                 $rules = [];
-                $actionName = $this->extractActionName($action);
-
-                if (str_contains($action, $this->actionsPath)) {
+                
+                if (str_contains($action, $actionsPath)) {
                     $classObject = app($action);
 
                     if (method_exists($classObject, 'rules')) {
@@ -37,7 +38,7 @@ class GenerateDoc
 
                     $padding = str_pad('', 50 - strlen($actionName), '.');
                     print("$actionName $padding DONE\n");
-                    
+
                 } else {
                     print('There is not action in this path!');
                 }
