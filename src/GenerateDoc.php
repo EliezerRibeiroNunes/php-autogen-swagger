@@ -39,8 +39,6 @@ class GenerateDoc
                     $padding = str_pad('', 50 - strlen($actionName), '.');
                     print("$actionName $padding DONE\n");
 
-                } else {
-                    print('There is not action in this path!');
                 }
             } catch (\Exception $e) {
                 print("$actionName - error: " . $e->getMessage() . "\n");
@@ -48,7 +46,6 @@ class GenerateDoc
             }
         }
     }
-
     private function setContent($route, array $rules, string $action)
     {
         $routePath       = "/" . $route->uri();
