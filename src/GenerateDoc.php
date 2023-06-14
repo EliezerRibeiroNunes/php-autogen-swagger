@@ -74,6 +74,14 @@ class GenerateDoc
                 description="Successful operation",
             ),
             security={{"bearerAuth": {}}},
+            @OA\Header(
+                header="Content-Type",
+                description="application/json",
+            ),
+            @OA\Header(
+                header="Accept",
+                description="application/json",
+            )
         ),
         PHP;
 
